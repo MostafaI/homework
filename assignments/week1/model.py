@@ -18,7 +18,7 @@ class LinearRegression:
             print("LinAlgError. Matrix is Singular. No analytical solution.")
 
     def predict(self, X):
-        return self.w @ X + self.b
+        return self.w.T @ X + self.b
 
 
 class GradientDescentLinearRegression(LinearRegression):
