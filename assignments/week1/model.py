@@ -7,13 +7,18 @@ class LinearRegression:
     b: float
 
     def __init__(self):
-        raise NotImplementedError()
+        self.w = 0
+        self.b = 0
+
 
     def fit(self, X, y):
-        raise NotImplementedError()
+        if np.linalg.det(X.T@X) != 0:
+            self.w = np.linalg.inv(X.T@X) @X.T@y
+        else:
+            print("LinAlgError. Matrix is Singular. No analytical solution.")
 
     def predict(self, X):
-        raise NotImplementedError()
+        return self.w @ X + self.b
 
 
 class GradientDescentLinearRegression(LinearRegression):
@@ -24,8 +29,10 @@ class GradientDescentLinearRegression(LinearRegression):
     def fit(
         self, X: np.ndarray, y: np.ndarray, lr: float = 0.01, epochs: int = 1000
     ) -> None:
-        raise NotImplementedError()
-
+        for i in range(epochs):
+            grad =  2 * (self.w.T @ x+self.b -y) * x
+            self.w -= lr * grad # dL / dw = 2 * (w.T*x+b -y) * x
+ 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
         Predict the output for the given input.
@@ -37,4 +44,6 @@ class GradientDescentLinearRegression(LinearRegression):
             np.ndarray: The predicted output.
 
         """
-        raise NotImplementedError()
+        return self.w @ X + self.b
+#         raise NotImplementedError()
+
