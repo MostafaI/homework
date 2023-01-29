@@ -95,5 +95,4 @@ class GradientDescentLinearRegression(LinearRegression):
             np.ndarray: The predicted output.
 
         """
-        X_new = np.hstack((X, np.ones((X.shape[0], 1))))
         return X @ self.w + self.b  # + self.b
