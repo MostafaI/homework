@@ -25,9 +25,10 @@ class LinearRegression:
         """
         # First append the bias to the features
         X_new = np.hstack((X, np.ones((X.shape[0], 1))))
-        # make sure that y is 2D
         if np.linalg.det(X_new.T @ X_new) != 0:
-            self.w = np.linalg.inv(X_new.T @ X_new) @ X_new.T @ y.reshape(-1, 1)
+            sol = np.linalg.inv(X_new.T @ X_new) @ X_new.T @ y.reshape(-1, 1)
+            self.w = sol[:-1,:]
+            self.b = sol[-1].item()
         else:
             print("LinAlgError. Matrix is Singular. No analytical solution.")
 
@@ -41,8 +42,7 @@ class LinearRegression:
         """
 
         # First append the bias to the features
-        X_new = np.hstack((X, np.ones((X.shape[0], 1))))
-        return X_new @ self.w
+        return X @ self.w + self.b
 
 
 class GradientDescentLinearRegression(LinearRegression):
@@ -58,7 +58,7 @@ class GradientDescentLinearRegression(LinearRegression):
         self.b = 0
 
     def fit(
-        self, X: np.ndarray, y: np.ndarray, lr: float = 1e-8, epochs: int = 1000
+        self, X: np.ndarray, y: np.ndarray, lr: float = 0.0001, epochs: int = 1000
     ) -> None:
         """
         Fit the weights for the given input using closed form solution.
@@ -69,19 +69,21 @@ class GradientDescentLinearRegression(LinearRegression):
 
         """
         # First append the bias to the features
-        X_new = np.hstack((X, np.ones((X.shape[0], 1))))
+        n_samples, n_features = X.shape
         # initialize the weights
-        self.w = np.random.normal(0, 1, (X_new.shape[1], 1))
-        losses = []
+        self.w = np.random.normal(0, 1, (n_features, 1))
+        self.b = 0
+        # losses = []
         for i in range(epochs):
-            grad = 2 * ((self.w.T @ X_new.T) - y) @ X_new / X_new.shape[0]
-            # grad =  (2 * (X_new@self.w-y) @ X_new).mean(axis=0).reshape(-1,1)
-            # print('grad.shape',grad.shape, grad[:5])
-            # print('X_new.shape',X_new.shape)
-            # print('y.shape',y.shape)
-            self.w -= lr * grad.T  # dL / dw = 2 * (w.T*x+b -y) * x
-            # losses.append((((self.w.T @ X_new.T).T-y)**2).mean())
+            y_pred = X @ self.w + self.b
+            err = y_pred-y
+            grad_w = (2*err @ X).mean(axis=0).reshape(-1,1)
+            grad_b = 2*(y_pred.squeeze()-y.squeeze()).mean()
+            self.w -= lr * grad_w 
+            self.b -= lr * grad_b
+        #     losses.append(((y_pred.squeeze()-y.squeeze())**2).mean())
         # plt.plot(losses)
+        # plt.show()
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
@@ -95,4 +97,4 @@ class GradientDescentLinearRegression(LinearRegression):
 
         """
         X_new = np.hstack((X, np.ones((X.shape[0], 1))))
-        return (self.w.T @ X_new.T).T  # + self.b
+        return X @ self.w + self.b  # + self.b
