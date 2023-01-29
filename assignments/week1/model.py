@@ -27,7 +27,7 @@ class LinearRegression:
         X_new = np.hstack((X, np.ones((X.shape[0], 1))))
         if np.linalg.det(X_new.T @ X_new) != 0:
             sol = np.linalg.inv(X_new.T @ X_new) @ X_new.T @ y.reshape(-1, 1)
-            self.w = sol[:-1,:]
+            self.w = sol[:-1, :]
             self.b = sol[-1].item()
         else:
             print("LinAlgError. Matrix is Singular. No analytical solution.")
@@ -76,10 +76,10 @@ class GradientDescentLinearRegression(LinearRegression):
         # losses = []
         for i in range(epochs):
             y_pred = X @ self.w + self.b
-            err = y_pred-y
-            grad_w = (2*err @ X).mean(axis=0).reshape(-1,1)
-            grad_b = 2*(y_pred.squeeze()-y.squeeze()).mean()
-            self.w -= lr * grad_w 
+            err = y_pred - y
+            grad_w = (2 * err @ X).mean(axis=0).reshape(-1, 1)
+            grad_b = 2 * (y_pred.squeeze() - y.squeeze()).mean()
+            self.w -= lr * grad_w
             self.b -= lr * grad_b
         #     losses.append(((y_pred.squeeze()-y.squeeze())**2).mean())
         # plt.plot(losses)
