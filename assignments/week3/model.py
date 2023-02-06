@@ -57,7 +57,7 @@ class MLP(torch.nn.Module):
         """
         for layer in self.layers:
             x = layer(x)
-            x = self.activation(x)
+            x = self.activation()(x)
 
         # Get outputs
         return self.out(x)
