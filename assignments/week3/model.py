@@ -45,7 +45,7 @@ class MLP(torch.nn.Module):
         # Create final layer
         self.out = torch.nn.Linear(hidden_size, num_classes)
 
-    def forward(self, x) -> torch.Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Forward pass of the network.
 
