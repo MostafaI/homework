@@ -45,6 +45,13 @@ class MLP(torch.nn.Module):
         # Create final layer
         self.out = torch.nn.Linear(hidden_size, num_classes)
 
+        # Initialize the weights
+        for layer in self.layers:
+            self.initializer(layer.weight)
+            torch.nn.init.zeros_(layer.bias)
+        self.initializer(self.out.weight)
+        torch.nn.init.zeros_(self.out.bias)
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Forward pass of the network.
