@@ -2,7 +2,11 @@ import torch
 from typing import Callable
 
 
-class MLP:
+class MLP(torch.nn.Module):
+    """
+    MLP implementation using pytorch
+    """
+
     def __init__(
         self,
         input_size: int,
@@ -22,7 +26,25 @@ class MLP:
             activation: The activation function to use in the hidden layer.
             initializer: The initializer to use for the weights.
         """
-        ...
+        # initialize the class
+        super(MLP, self).__init__()
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.num_classes = num_classes
+        self.hidden_count = hidden_count
+        self.activation = activation
+        self.initializer = initializer
+
+        self.layers = nn.ModuleList()
+
+        # Loop over layers and create each one
+        for i in range(hidden_count):
+            next_num_inputs = hidden_size
+            self.layers += [nn.Linear(input_size, next_num_inputs)]
+            num_inputs = next_num_inputs
+
+        # Create final layer
+        self.out = nn.Linear(num_inputs, num_classes)
 
     def forward(self, x):
         """
@@ -34,4 +56,9 @@ class MLP:
         Returns:
             The output of the network.
         """
-        ...
+        for layer in self.layers:
+            x = layer(x)
+            x = self.activation(x)
+
+        # Get outputs
+        return self.out(x)
