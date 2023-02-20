@@ -46,12 +46,11 @@ class CustomLRScheduler(_LRScheduler):
             group["lr"] * self.decay_factor for group in self.optimizer.param_groups
         ][0]
         # if self.last_epoch ==0 : print('initial LR =',current_lr)
-        self.prev_lrs.append([group["lr"] for group in self.optimizer.param_groups][0])
+        # self.prev_lrs.append([group["lr"] for group in self.optimizer.param_groups][0])
         for milestone, lr in zip(self.milestones, self.lrs):
             if self.last_epoch == milestone:
                 # print(self.last_epoch, 'old LR =', current_lr)
                 # print('\tnew LR =', lr)
                 return [lr for group in self.optimizer.param_groups]
-        if self.last_epoch == 14 * 372:
-            plt.plot(self.prev_lrs)
+        # if self.last_epoch == 14 * 372: plt.plot(self.prev_lrs)
         return [group["lr"] for group in self.optimizer.param_groups]
