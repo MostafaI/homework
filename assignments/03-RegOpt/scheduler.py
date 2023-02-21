@@ -1,7 +1,6 @@
 from typing import List
 
 from torch.optim.lr_scheduler import _LRScheduler
-import math
 
 
 # Old Adagrad
@@ -42,11 +41,6 @@ class CustomLRScheduler(_LRScheduler):
         """
         updates the learning rate
         """
-        current_lr = [
-            group["lr"] * self.decay_factor for group in self.optimizer.param_groups
-        ][0]
-        # if self.last_epoch ==0 : print('initial LR =',current_lr)
-        # self.prev_lrs.append([group["lr"] for group in self.optimizer.param_groups][0])
         for milestone, lr in zip(self.milestones, self.lrs):
             if self.last_epoch == milestone:
                 # print(self.last_epoch, 'old LR =', current_lr)

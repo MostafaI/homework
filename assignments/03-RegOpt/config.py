@@ -7,7 +7,7 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 
 class CONFIG:
     batch_size = 64
-    num_epochs = 12
+    num_epochs = 10
     initial_learning_rate = 0.003
     initial_weight_decay = 0
     epoch_size = 782
@@ -16,8 +16,8 @@ class CONFIG:
         # constructor here.
         "decay_factor": 0.9,
         "decay_epochs": 600,
-        "milestones": [3, 4 * epoch_size, 10 * epoch_size],
-        "lrs": [0.003, 0.0005, 0.00005],
+        "milestones": [4 * epoch_size, 8 * epoch_size],
+        "lrs": [0.0005, 0.00005],
     }
 
     optimizer_factory: Callable[
