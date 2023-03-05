@@ -8,7 +8,9 @@ class Model(torch.nn.Module):
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
         super(Model, self).__init__()
-        self.conv1 = torch.nn.Conv2d(in_channels=num_channels, out_channels=32, kernel_size=3)
+        self.conv1 = torch.nn.Conv2d(
+            in_channels=num_channels, out_channels=32, kernel_size=3
+        )
         self.conv2 = torch.nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
         self.fc1 = torch.nn.Linear(12544, 128)
         self.fc2 = torch.nn.Linear(128, num_classes)
