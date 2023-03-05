@@ -25,5 +25,5 @@ class Model(torch.nn.Module):
         x = self.pool(x)
         x = x.view(x.size(0), -1)  # Flatten
         x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
+        x = self.fc2(x)
         return x
