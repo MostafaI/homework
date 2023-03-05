@@ -11,8 +11,8 @@ class Model(torch.nn.Module):
         self.conv1 = torch.nn.Conv2d(
             in_channels=num_channels, out_channels=32, kernel_size=3
         )
-        self.conv2 = torch.nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
-        self.fc1 = torch.nn.Linear(12544, 128)
+        self.conv2 = torch.nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3)
+        self.fc1 = torch.nn.Linear(6272, 128)
         self.fc2 = torch.nn.Linear(128, num_classes)
         self.pool = torch.nn.MaxPool2d(2, 2)
 
