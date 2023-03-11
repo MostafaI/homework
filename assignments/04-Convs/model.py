@@ -16,7 +16,7 @@ class Model(torch.nn.Module):
         self.fc2 = torch.nn.Linear(128, num_classes)
         self.pool = torch.nn.MaxPool2d(2, 2)
         self.bn1 = torch.nn.BatchNorm2d(16)
-        self.bn2 = torch.nn.BatchNorm2d(16)
+        self.bn2 = torch.nn.BatchNorm2d(8)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
