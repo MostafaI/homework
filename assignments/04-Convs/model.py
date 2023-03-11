@@ -18,7 +18,7 @@ class Model(torch.nn.Module):
         self.dropout = torch.nn.Dropout(0.4)
         self.bn1 = torch.nn.BatchNorm2d(8)
         self.bn2 = torch.nn.BatchNorm2d(16)
-        self.bn3 =  torch.nn.BatchNorm1d(576)
+        self.bn3 = torch.nn.BatchNorm1d(576)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
