@@ -15,6 +15,7 @@ class Model(torch.nn.Module):
         self.fc1 = torch.nn.Linear(576, num_classes)
         # self.fc2 = torch.nn.Linear(128, num_classes)
         self.pool = torch.nn.MaxPool2d(2, 2)
+        self.dropout = nn.Dropout(0.5)
         self.bn1 = torch.nn.BatchNorm2d(16)
         self.bn2 = torch.nn.BatchNorm2d(16)
 
